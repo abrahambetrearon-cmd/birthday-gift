@@ -1,0 +1,1455 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6a1b9a" />
+
+  <title>Happy Birthday Hasset 🎂❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.2), transparent 25%),
+        radial-gradient(circle at 80% 90%, rgba(255,200,230,.15), transparent 30%),
+        linear-gradient(135deg, #4a148c, #880e4f, #c2185b);
+    }
+
+    /* =========================
+       INTRO SCREEN
+    ========================= */
+
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 25px;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.12), transparent 35%),
+        linear-gradient(135deg, #311b92, #880e4f);
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #intro.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .intro-content {
+      max-width: 520px;
+      animation: introFloat 3s ease-in-out infinite;
+    }
+
+    .intro-cross {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .intro-title {
+      font-size: clamp(2.3rem, 10vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .intro-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      opacity: .9;
+    }
+
+    .start-button {
+      border: none;
+      padding: 17px 32px;
+      border-radius: 50px;
+      background: white;
+      color: #8e1458;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 35px rgba(0,0,0,.3);
+      transition: .3s;
+    }
+
+    .start-button:hover {
+      transform: scale(1.06);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section {
+      min-height: 100vh;
+      padding: 70px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .content {
+      width: min(100%, 850px);
+      text-align: center;
+      position: relative;
+      z-index: 20;
+    }
+
+    /* =========================
+       FLOATING HEARTS
+    ========================= */
+
+    .floating {
+      position: fixed;
+      bottom: -60px;
+      z-index: 2;
+      pointer-events: none;
+      animation: floatUp linear forwards;
+      opacity: .8;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: .9;
+      }
+
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* =========================
+       COUNTDOWN / TODAY
+    ========================= */
+
+    .welcome {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .9;
+      margin-bottom: 15px;
+    }
+
+    .countdown-title {
+      font-size: clamp(2rem, 8vw, 4rem);
+      margin-bottom: 35px;
+      font-weight: 800;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .time-box {
+      min-width: 85px;
+      padding: 18px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+
+    .time-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .time-label {
+      font-size: .75rem;
+      opacity: .75;
+      text-transform: uppercase;
+    }
+
+    .birthday-today {
+      display: none;
+      animation: birthdayPulse 1.5s infinite alternate;
+    }
+
+    .birthday-today h2 {
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      color: #ffeaa7;
+      text-shadow:
+        0 0 15px rgba(255,255,255,.6),
+        0 0 35px rgba(255,210,100,.5);
+    }
+
+    .birthday-today p {
+      margin-top: 15px;
+      font-size: 1.2rem;
+    }
+
+    .scroll-hint {
+      margin-top: 25px;
+      opacity: .65;
+      animation: pulse 2s infinite;
+    }
+
+    /* =========================
+       BIRTHDAY SECTION
+    ========================= */
+
+    .birthday-section {
+      background: rgba(0,0,0,.08);
+    }
+
+    .cross {
+      font-size: 45px;
+      margin-bottom: 10px;
+      animation: gentleFloat 3s infinite;
+    }
+
+    /* =========================
+       CAKE
+    ========================= */
+
+    .cake {
+      position: relative;
+      width: 220px;
+      height: 190px;
+      margin: 30px auto 20px;
+    }
+
+    .cake-base {
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      width: 200px;
+      height: 95px;
+      border-radius: 20px 20px 30px 30px;
+      background: linear-gradient(#ffb3c6, #ff6f91);
+      box-shadow:
+        inset 0 -15px rgba(160,0,60,.15),
+        0 15px 30px rgba(0,0,0,.2);
+    }
+
+    .cake-middle {
+      position: absolute;
+      bottom: 65px;
+      left: 25px;
+      width: 170px;
+      height: 55px;
+      border-radius: 18px;
+      background: #fff0f5;
+    }
+
+    .icing {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 25px;
+      background: #fff;
+      border-radius: 18px 18px 10px 10px;
+    }
+
+    .icing::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: -12px;
+      height: 20px;
+      background:
+        radial-gradient(circle at 10px 0, white 9px, transparent 10px),
+        radial-gradient(circle at 45px 0, white 9px, transparent 10px),
+        radial-gradient(circle at 80px 0, white 9px, transparent 10px),
+        radial-gradient(circle at 115px 0, white 9px, transparent 10px);
+    }
+
+    .candle {
+      position: absolute;
+      bottom: 110px;
+      width: 15px;
+      height: 50px;
+      background: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 6px,
+        #ff4d6d 6px,
+        #ff4d6d 12px
+      );
+      border-radius: 5px;
+    }
+
+    .candle:nth-child(1) {
+      left: 62px;
+    }
+
+    .candle:nth-child(2) {
+      left: 102px;
+    }
+
+    .candle:nth-child(3) {
+      left: 142px;
+    }
+
+    .flame {
+      position: absolute;
+      width: 18px;
+      height: 27px;
+      left: -1.5px;
+      top: -27px;
+      background: #ffd166;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow:
+        0 0 15px #ffd166,
+        0 0 30px #ff9f1c;
+      animation: flame .7s infinite alternate;
+    }
+
+    /* =========================
+       TITLES
+    ========================= */
+
+    .birthday-title {
+      font-size: clamp(3rem, 12vw, 6rem);
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: glow 2s infinite alternate;
+    }
+
+    .hasset {
+      font-size: clamp(2.3rem, 9vw, 4rem);
+      color: #ffeaa7;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .big-sister {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 25px;
+    }
+
+    .message {
+      max-width: 650px;
+      margin: auto;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      line-height: 1.8;
+    }
+
+    /* =========================
+       VERSES
+    ========================= */
+
+    .verse-section {
+      background: rgba(255,255,255,.03);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 8vw, 4rem);
+      margin-bottom: 35px;
+    }
+
+    .verse-card {
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 25px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(15px);
+      transition: opacity .5s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,.15);
+    }
+
+    .verse {
+      font-size: clamp(1.05rem, 4vw, 1.4rem);
+      line-height: 1.7;
+    }
+
+    .reference {
+      margin-top: 15px;
+      color: #ffeaa7;
+      font-weight: 800;
+    }
+
+    /* =========================
+       FINAL MESSAGE
+    ========================= */
+
+    .final-section {
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,.1), transparent 45%);
+    }
+
+    .letter {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 30px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    }
+
+    .letter-icon {
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .letter h2 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      margin-bottom: 25px;
+    }
+
+    .letter p {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      line-height: 1.9;
+      text-align: left;
+    }
+
+    .signature {
+      margin-top: 30px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      text-align: right;
+      color: #ffeaa7;
+    }
+
+    /* =========================
+       MUSIC
+    ========================= */
+
+    .music-button {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1000;
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+      color: white;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      font-size: 1.3rem;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 9px;
+      height: 17px;
+      z-index: 50;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    @keyframes confettiFall {
+      from {
+        transform: translateY(-20px) rotate(0);
+      }
+
+      to {
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+
+    @keyframes flame {
+      from {
+        transform: rotate(-45deg) scale(.9);
+      }
+
+      to {
+        transform: rotate(-45deg) scale(1.15);
+      }
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px rgba(255,255,255,.3);
+      }
+
+      to {
+        text-shadow:
+          0 0 20px rgba(255,255,255,.8),
+          0 0 50px rgba(255,200,230,.6);
+      }
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes introFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: .4;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes birthdayPulse {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.04);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .section {
+        padding: 70px 15px;
+      }
+
+      .time-box {
+        min-width: 70px;
+        padding: 14px 8px;
+      }
+
+      .time-number {
+        font-size: 1.5rem;
+      }
+
+      .cake {
+        transform: scale(.85);
+        margin-top: 10px;
+      }
+
+      .letter {
+        padding: 30px 20px;
+      }
+
+      .letter p {
+        line-height: 1.75;
+      }
+
+      .music-button {
+        width: 46px;
+        height: 46px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       INTRO
+  ========================= -->
+
+  <div id="intro">
+
+    <div class="intro-content">
+
+      <div class="intro-cross">✝️</div>
+
+      <div class="intro-title">
+        A Birthday Surprise 🎁
+      </div>
+
+      <div class="intro-text">
+        This little surprise was made especially
+        for Hasset, an amazing big sister. ❤️
+      </div>
+
+      <button class="start-button" onclick="startExperience()">
+        🎂 Open Hasset's Birthday
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- MUSIC BUTTON -->
+
+  <button
+    class="music-button"
+    id="musicButton"
+    onclick="toggleMusic()"
+    aria-label="Toggle music"
+  >
+    🔇
+  </button>
+
+
+  <main class="page">
+
+    <!-- =========================
+         COUNTDOWN / TODAY
+    ========================= -->
+
+    <section class="section">
+
+      <div class="content">
+
+        <div class="welcome">
+          August 9 • Hasset's Special Day
+        </div>
+
+        <h2 class="countdown-title" id="countdownTitle">
+          Counting Down To Your Birthday 🎂
+        </h2>
+
+        <div class="countdown" id="countdown">
+
+          <div class="time-box">
+            <span class="time-number" id="days">00</span>
+            <span class="time-label">Days</span>
+          </div>
+
+          <div class="time-box">
+            <span class="time-number" id="hours">00</span>
+            <span class="time-label">Hours</span>
+          </div>
+
+          <div class="time-box">
+            <span class="time-number" id="minutes">00</span>
+            <span class="time-label">Minutes</span>
+          </div>
+
+          <div class="time-box">
+            <span class="time-number" id="seconds">00</span>
+            <span class="time-label">Seconds</span>
+          </div>
+
+        </div>
+
+        <div class="birthday-today" id="birthdayToday">
+
+          <h2>
+            🎉 TODAY IS THE DAY! 🎉
+          </h2>
+
+          <p>
+            Happy Birthday, Hasset! ❤️
+          </p>
+
+        </div>
+
+        <div class="scroll-hint">
+          ↓ Scroll down for your surprise ↓
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         BIRTHDAY
+    ========================= -->
+
+    <section class="section birthday-section">
+
+      <div class="content">
+
+        <div class="cross">✝️</div>
+
+        <div class="cake">
+
+          <div class="candle">
+            <div class="flame"></div>
+          </div>
+
+          <div class="candle">
+            <div class="flame"></div>
+          </div>
+
+          <div class="candle">
+            <div class="flame"></div>
+          </div>
+
+          <div class="cake-middle">
+            <div class="icing"></div>
+          </div>
+
+          <div class="cake-base"></div>
+
+        </div>
+
+        <h1 class="birthday-title">
+          Happy Birthday!
+        </h1>
+
+        <div class="hasset">
+          Hasset 💖
+        </div>
+
+        <div class="big-sister">
+          To my amazing big sister
+        </div>
+
+        <p class="message">
+
+          Today is a celebration of you —
+          your kindness, your strength,
+          your beautiful heart, and the blessing
+          you are to everyone around you.
+
+          <br><br>
+
+          I pray that God continues to guide your steps,
+          protect you, strengthen you, and fill your life
+          with happiness, peace, love, and countless blessings.
+
+          <br><br>
+
+          Happy Birthday, big sis! 🎂❤️
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         BIBLE VERSES
+    ========================= -->
+
+    <section class="section verse-section">
+
+      <div class="content">
+
+        <h2 class="section-title">
+          God's Blessing For You ✝️
+        </h2>
+
+        <div class="verse-card" id="verseCard">
+
+          <div class="verse" id="verse"></div>
+
+          <div class="reference" id="reference"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FINAL MESSAGE
+    ========================= -->
+
+    <section class="section final-section">
+
+      <div class="content">
+
+        <div class="letter">
+
+          <div class="letter-icon">
+            💌
+          </div>
+
+          <h2>
+            A Message From Your Little Brother
+          </h2>
+
+          <p>
+
+            Dear Hasset,
+
+            <br><br>
+
+            I just want you to know how grateful I am
+            to have you as my big sister.
+
+            <br><br>
+
+            You have been someone I can look up to,
+            learn from, laugh with, and always call my sister.
+            Even though we may not always say it,
+            having you in my life is something I truly
+            appreciate.
+
+            <br><br>
+
+            On your birthday, my prayer is that God will
+            continue to lead you wherever you go.
+            May He give you wisdom when you need it,
+            strength when life becomes difficult,
+            peace when your heart feels heavy,
+            and joy that never runs out.
+
+            <br><br>
+
+            May this new chapter of your life be filled
+            with beautiful memories, answered prayers,
+            new opportunities, genuine happiness,
+            and God's endless grace.
+
+            <br><br>
+
+            Never forget that you are loved, appreciated,
+            and incredibly special.
+
+            <br><br>
+
+            Happy Birthday, Hasset! 🎂🎉❤️
+
+          </p>
+
+          <div class="signature">
+            With love,<br>
+            Your Little Brother ❤️
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    /* =====================================
+       HASSET'S BIRTHDAY
+       AUGUST 9
+    ===================================== */
+
+    const birthdayMonth = 8;
+    const birthdayDay = 9;
+
+
+    /* =====================================
+       COUNTDOWN
+    ===================================== */
+
+    function updateCountdown() {
+
+      const now = new Date();
+
+      const currentMonth = now.getMonth() + 1;
+      const currentDay = now.getDate();
+
+      /*
+        If today is August 9,
+        show the birthday celebration.
+      */
+
+      if (
+        currentMonth === birthdayMonth &&
+        currentDay === birthdayDay
+      ) {
+
+        document.getElementById(
+          "countdownTitle"
+        ).style.display = "none";
+
+        document.getElementById(
+          "countdown"
+        ).style.display = "none";
+
+        document.getElementById(
+          "birthdayToday"
+        ).style.display = "block";
+
+        return;
+      }
+
+
+      /*
+        Otherwise calculate the next
+        August 9.
+      */
+
+      let year = now.getFullYear();
+
+      let birthday = new Date(
+        year,
+        birthdayMonth - 1,
+        birthdayDay,
+        0,
+        0,
+        0
+      );
+
+      if (birthday <= now) {
+
+        birthday = new Date(
+          year + 1,
+          birthdayMonth - 1,
+          birthdayDay,
+          0,
+          0,
+          0
+        );
+
+      }
+
+
+      const difference = birthday - now;
+
+
+      const days = Math.floor(
+        difference /
+        (1000 * 60 * 60 * 24)
+      );
+
+      const hours = Math.floor(
+        (difference /
+          (1000 * 60 * 60)) % 24
+      );
+
+      const minutes = Math.floor(
+        (difference /
+          (1000 * 60)) % 60
+      );
+
+      const seconds = Math.floor(
+        (difference / 1000) % 60
+      );
+
+
+      document.getElementById("days")
+        .textContent =
+        String(days).padStart(2, "0");
+
+      document.getElementById("hours")
+        .textContent =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("minutes")
+        .textContent =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("seconds")
+        .textContent =
+        String(seconds).padStart(2, "0");
+
+    }
+
+
+    updateCountdown();
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
+
+    /* =====================================
+       BIBLE VERSES
+    ===================================== */
+
+    const verses = [
+
+      {
+        text:
+          "“The Lord bless you and keep you.”",
+
+        reference:
+          "Numbers 6:24"
+      },
+
+      {
+        text:
+          "“For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you, plans to give you hope and a future.”",
+
+        reference:
+          "Jeremiah 29:11"
+      },
+
+      {
+        text:
+          "“This is the day the Lord has made; let us rejoice and be glad in it.”",
+
+        reference:
+          "Psalm 118:24"
+      }
+
+    ];
+
+
+    let currentVerse = 0;
+
+    const verseCard =
+      document.getElementById("verseCard");
+
+    const verse =
+      document.getElementById("verse");
+
+    const reference =
+      document.getElementById("reference");
+
+
+    function showVerse(index) {
+
+      verseCard.style.opacity = "0";
+
+      setTimeout(() => {
+
+        verse.textContent =
+          verses[index].text;
+
+        reference.textContent =
+          "— " +
+          verses[index].reference;
+
+        verseCard.style.opacity = "1";
+
+      }, 400);
+
+    }
+
+
+    showVerse(0);
+
+
+    setInterval(() => {
+
+      currentVerse++;
+
+      if (
+        currentVerse >= verses.length
+      ) {
+        currentVerse = 0;
+      }
+
+      showVerse(currentVerse);
+
+    }, 5000);
+
+
+    /* =====================================
+       CONFETTI
+    ===================================== */
+
+    const confettiColors = [
+      "#ff4d6d",
+      "#ffd166",
+      "#06d6a0",
+      "#118ab2",
+      "#ffffff",
+      "#c77dff",
+      "#ff9f1c",
+      "#ff85a1"
+    ];
+
+
+    function createConfetti(amount = 100) {
+
+      for (
+        let i = 0;
+        i < amount;
+        i++
+      ) {
+
+        const piece =
+          document.createElement("div");
+
+        piece.className =
+          "confetti";
+
+        piece.style.left =
+          Math.random() * 100 + "vw";
+
+        piece.style.backgroundColor =
+          confettiColors[
+            Math.floor(
+              Math.random() *
+              confettiColors.length
+            )
+          ];
+
+        piece.style.width =
+          Math.random() * 8 + 5 + "px";
+
+        piece.style.height =
+          Math.random() * 13 + 7 + "px";
+
+        piece.style.animationDuration =
+          Math.random() * 3 + 3 + "s";
+
+        piece.style.animationDelay =
+          Math.random() * 1.5 + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 7000);
+
+      }
+
+    }
+
+
+    /* =====================================
+       FLOATING HEARTS & BALLOONS
+    ===================================== */
+
+    const floatingItems = [
+      "❤️",
+      "💖",
+      "💕",
+      "💗",
+      "🎈",
+      "🎈",
+      "✨",
+      "🌸"
+    ];
+
+
+    function createFloatingItem() {
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "floating";
+
+      item.textContent =
+        floatingItems[
+          Math.floor(
+            Math.random() *
+            floatingItems.length
+          )
+        ];
+
+      item.style.left =
+        Math.random() * 100 + "vw";
+
+      item.style.fontSize =
+        Math.random() * 20 + 20 + "px";
+
+      item.style.animationDuration =
+        Math.random() * 6 + 7 + "s";
+
+      document.body.appendChild(item);
+
+      setTimeout(() => {
+        item.remove();
+      }, 14000);
+
+    }
+
+
+    setInterval(
+      createFloatingItem,
+      700
+    );
+
+
+    /* =====================================
+       BIRTHDAY MUSIC
+    ===================================== */
+
+    let audioContext = null;
+    let musicPlaying = false;
+    let musicTimer = null;
+
+    const melody = [
+      261.63,
+      261.63,
+      293.66,
+      261.63,
+      349.23,
+      329.63,
+
+      261.63,
+      261.63,
+      293.66,
+      261.63,
+      392.00,
+      349.23
+    ];
+
+    let noteIndex = 0;
+
+
+    function playNote() {
+
+      if (
+        !audioContext ||
+        !musicPlaying
+      ) {
+        return;
+      }
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+      const gain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "sine";
+
+      oscillator.frequency.value =
+        melody[noteIndex];
+
+
+      gain.gain.setValueAtTime(
+        0.0001,
+        audioContext.currentTime
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.08,
+        audioContext.currentTime + 0.03
+      );
+
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        audioContext.currentTime + 0.6
+      );
+
+
+      oscillator.connect(gain);
+
+      gain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      oscillator.stop(
+        audioContext.currentTime + 0.65
+      );
+
+
+      noteIndex++;
+
+      if (
+        noteIndex >= melody.length
+      ) {
+        noteIndex = 0;
+      }
+
+    }
+
+
+    function startMusic() {
+
+      if (!audioContext) {
+
+        audioContext =
+          new (
+            window.AudioContext ||
+            window.webkitAudioContext
+          )();
+
+      }
+
+
+      if (
+        audioContext.state ===
+        "suspended"
+      ) {
+
+        audioContext.resume();
+
+      }
+
+
+      musicPlaying = true;
+
+
+      document.getElementById(
+        "musicButton"
+      ).textContent = "🔊";
+
+
+      playNote();
+
+
+      musicTimer =
+        setInterval(
+          playNote,
+          650
+        );
+
+    }
+
+
+    function stopMusic() {
+
+      musicPlaying = false;
+
+      clearInterval(
+        musicTimer
+      );
+
+      document.getElementById(
+        "musicButton"
+      ).textContent = "🔇";
+
+    }
+
+
+    function toggleMusic() {
+
+      if (musicPlaying) {
+        stopMusic();
+      } else {
+        startMusic();
+      }
+
+    }
+
+
+    /* =====================================
+       START EXPERIENCE
+    ===================================== */
+
+    function startExperience() {
+
+      document
+        .getElementById("intro")
+        .classList.add("hidden");
+
+
+      startMusic();
+
+
+      /*
+        Big birthday confetti burst
+      */
+
+      createConfetti(250);
+
+
+      setTimeout(() => {
+        createConfetti(150);
+      }, 1000);
+
+
+      setTimeout(() => {
+        createConfetti(150);
+      }, 2200);
+
+
+      /*
+        Automatically move to
+        Hasset's birthday section.
+      */
+
+      setTimeout(() => {
+
+        document
+          .querySelector(
+            ".birthday-section"
+          )
+          .scrollIntoView({
+            behavior: "smooth"
+          });
+
+      }, 1000);
+
+    }
+
+
+    /* =====================================
+       INITIAL EFFECTS
+    ===================================== */
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        createConfetti(50);
+
+        for (
+          let i = 0;
+          i < 10;
+          i++
+        ) {
+
+          setTimeout(
+            createFloatingItem,
+            i * 300
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
+```
